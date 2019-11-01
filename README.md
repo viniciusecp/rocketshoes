@@ -1,8 +1,5 @@
 <h1 align="center">
-  <img alt="Rocketshoes" itle="Rocketshoes" src=".github/rocketshoes.png"  width="300px" style="background:#191920; padding: 20px; border-radius: 4px" />  
-  <br />
-  <br />
-  Bootcamp GoStack Rocketshoes
+  Rocketshoes
 </h1>
 
 <h3 align="center">
@@ -20,7 +17,11 @@
 
 Neste projeto foi criado um **e-commerce** utilizando **ReactJS** para web e **React Native** para mobile. É possível adicionar items ao carrinho, contralar sua quatidade, é feito verificação de estoque entre outras funcionalidades utilizando as tecnologias **Redux** e **Redux Saga**.
 
-O projeto foi feito utilizando redux com classes e num segundo passo, essas classes foram transformadas em funções, utilizando os **Hooks**.
+O projeto foi feito utilizando **Redux** com classes e num segundo passo, essas classes foram transformadas em funções, utilizando os **Hooks**.
+
+Foi utilizado a arquitetura **Flux**, que nos permite manipular estados globais de uma aplicação de forma robusta e escalavel. Pensando que, o estado de um carrinho de compras precisa ser manipulado tanto pelos componentes da página inicial, quanto pelos da página do carrinho, se faz necessário a utilização desta arquitetura para que ambos componentes tenham acesso ao estado global da aplicação.
+
+A utilização dos **Hooks** nos permite manipulação de estado de um componente sem a utilização de classes, apenas por funções. Além disso, dimuiniu a verbosidade causada pelos métodos do ciclo de vida ou por integrações do **React** com bibliotecas como **Redux**.
 
 ## :wrench: Ferramentas
 
@@ -29,6 +30,7 @@ Dentre diversas ferramentas, as principais foram:
 - Redux
 - Redux Saga
 - React Hooks
+- Immer
 
 ## :computer: Resultado
 
