@@ -1,13 +1,15 @@
 import React from 'react';
 import {TouchableOpacity} from 'react-native';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 import PropTypes from 'prop-types';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import {Container, Logo, BasketContainer, ItemCount} from './styles';
 
-function Header({navigation, cartSize = 0}) {
+export default function Header({navigation}) {
+  const cartSize = useSelector(state => state.cart.length);
+
   return (
     <Container>
       <TouchableOpacity onPress={() => navigation.navigate('Home')}>
@@ -21,19 +23,8 @@ function Header({navigation, cartSize = 0}) {
   );
 }
 
-const mapStateToProps = state => ({
-  cartSize: state.cart.length,
-});
-
-export default connect(mapStateToProps)(Header);
-
 Header.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
   }).isRequired,
-  cartSize: PropTypes.number,
-};
-
-Header.defaultProps = {
-  cartSize: 0,
 };
