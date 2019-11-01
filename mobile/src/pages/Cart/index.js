@@ -1,7 +1,12 @@
 import React from 'react';
 import {FlatList} from 'react-native';
 import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+
+import {formatPrice} from '../../util/format';
+
+import * as CartActions from '../../store/modules/cart/actions';
 
 import colors from '../../styles/colors';
 
@@ -25,9 +30,19 @@ import {
   TotalPrice,
   FinishButton,
   FinishButtonText,
+  EmptyContainer,
+  EmptyText,
 } from './styles';
 
-function Cart({products}) {
+function Cart({products, total, removeFromCart, updateAmountRequest}) {
+  function increment(product) {
+    updateAmountRequest(product.id, product.amount + 1);
+  }
+
+  function decrement(product) {
+    updateAmountRequest(product.id, product.amount - 1);
+  }
+
   function renderProduct({item}) {
     return (
       <Product>
@@ -42,7 +57,7 @@ function Cart({products}) {
               <ProductTitle>{item.title}</ProductTitle>
               <ProductPrice>{item.priceFormatted}</ProductPrice>
             </ProductDetails>
-            <ProductDelete>
+            <ProductDelete onPress={() => removeFromCart(item.id)}>
               <Icon name="delete-forever" size={24} color={colors.primary} />
             </ProductDelete>
           </ProductInfo>
@@ -50,7 +65,7 @@ function Cart({products}) {
 
         <ProductControls>
           <ProductAmountActions>
-            <ProductAmountAction>
+            <ProductAmountAction onPress={() => decrement(item)}>
               <Icon
                 name="remove-circle-outline"
                 size={20}
@@ -58,7 +73,7 @@ function Cart({products}) {
               />
             </ProductAmountAction>
             <ProductAmount value={String(item.amount)} />
-            <ProductAmountAction>
+            <ProductAmountAction onPress={() => increment(item)}>
               <Icon
                 name="add-circle-outline"
                 size={20}
@@ -66,7 +81,7 @@ function Cart({products}) {
               />
             </ProductAmountAction>
           </ProductAmountActions>
-          <ProductSubtotal>R$539,70</ProductSubtotal>
+          <ProductSubtotal>{item.subtotal}</ProductSubtotal>
         </ProductControls>
       </Product>
     );
@@ -74,26 +89,49 @@ function Cart({products}) {
 
   return (
     <Container>
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        data={products}
-        keyExtractor={item => String(item.id)}
-        renderItem={renderProduct}
-      />
-      <TotalContainer>
-        <TotalText>TOTAL</TotalText>
-        <TotalPrice>R$1820,23</TotalPrice>
+      {products.length === 0 ? (
+        <EmptyContainer>
+          <Icon name="remove-shopping-cart" size={64} color="#eee" />
+          <EmptyText>Seu carrinho está vazio.</EmptyText>
+        </EmptyContainer>
+      ) : (
+        <>
+          <FlatList
+            showsVerticalScrollIndicator={false}
+            data={products}
+            keyExtractor={item => String(item.id)}
+            renderItem={renderProduct}
+          />
+          <TotalContainer>
+            <TotalText>TOTAL</TotalText>
+            <TotalPrice>{total}</TotalPrice>
 
-        <FinishButton>
-          <FinishButtonText>FINALIZAR PEDIDO</FinishButtonText>
-        </FinishButton>
-      </TotalContainer>
+            <FinishButton>
+              <FinishButtonText>FINALIZAR PEDIDO</FinishButtonText>
+            </FinishButton>
+          </TotalContainer>
+        </>
+      )}
     </Container>
   );
 }
 
 const mapStateToProps = state => ({
-  products: state.cart,
+  products: state.cart.map(product => ({
+    ...product,
+    subtotal: formatPrice(product.price * product.amount),
+  })),
+  total: formatPrice(
+    state.cart.reduce((total, product) => {
+      return total + product.price * product.amount;
+    }, 0)
+  ),
 });
 
-export default connect(mapStateToProps)(Cart);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(CartActions, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Cart);
