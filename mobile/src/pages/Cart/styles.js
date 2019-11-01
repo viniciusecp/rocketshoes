@@ -8,6 +8,8 @@ export const Container = styled.View`
   margin: 20px;
   padding: 20px;
   border-radius: 4px;
+
+  flex: 1;
 `;
 
 export const Product = styled.View`
@@ -73,7 +75,7 @@ export const ProductAmount = styled.TextInput.attrs({
   background: #fff;
   padding: 0 10px;
   margin: 0 5px;
-  border: 1px solid #ddd;
+  border: 1px solid #999;
   border-radius: 4px;
   min-width: 40px;
 `;
@@ -114,6 +116,7 @@ export const FinishButtonText = styled.Text`
 `;
 
 export const EmptyContainer = styled.View`
+  flex: 1;
   align-items: center;
   justify-content: center;
 `;

@@ -1,4 +1,5 @@
 import {Alert} from 'react-native';
+import {RNToasty} from 'react-native-toasty';
 import {call, select, put, all, takeLatest} from 'redux-saga/effects';
 import NavigationService from '../../../services/navigation';
 
@@ -22,7 +23,10 @@ function* addToCart({id}) {
   const amount = currentAmount + 1;
 
   if (amount > stockAmount) {
-    Alert.alert('Quantidade solicitada fora de estoque');
+    RNToasty.Warn({
+      title: 'Quantidade solicitada fora de estoque',
+      titleSize: 14,
+    });
     return;
   }
 
@@ -48,7 +52,10 @@ function* updateAmount({id, amount}) {
   const stockAmount = stock.data.amount;
 
   if (amount > stockAmount) {
-    Alert.alert('Quantidade solicitada fora de estoque');
+    RNToasty.Warn({
+      title: 'Quantidade solicitada fora de estoque',
+      titleSize: 14,
+    });
     return;
   }
 

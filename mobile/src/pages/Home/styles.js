@@ -5,13 +5,18 @@ import colors from '../../styles/colors';
 
 export const Container = styled.View`
   background: ${colors.dark};
-  margin: 15px 0 15px 15px;
+  margin: 15px 0 0;
 `;
+
+export const ProductList = styled.FlatList.attrs({
+  ListHeaderComponent: styled.View`
+    width: 15px;
+  `,
+})``;
 
 export const Product = styled.View`
   background: #fff;
   padding: 10px;
-  /* margin: 15px; */
   margin-right: 15px;
   border-radius: 4px;
   width: 220px;

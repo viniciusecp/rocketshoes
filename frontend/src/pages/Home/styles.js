@@ -7,6 +7,14 @@ export const ProductList = styled.ul`
   grid-gap: 20px;
   list-style: none;
 
+  @media (max-width: 720px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
   li {
     display: flex;
     flex-direction: column;
@@ -65,6 +73,14 @@ export const ProductList = styled.ul`
         flex: 1;
         text-align: center;
         font-weight: bold;
+      }
+
+      @media (max-width: 720px) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      @media (max-width: 480px) {
+        grid-template-columns: repeat(1, 1fr);
       }
     }
   }

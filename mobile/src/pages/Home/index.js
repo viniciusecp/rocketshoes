@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import {FlatList} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -10,6 +9,7 @@ import api from '../../services/api';
 
 import {
   Container,
+  ProductList,
   Product,
   ProductImage,
   ProductTitle,
@@ -71,7 +71,7 @@ export default function Home() {
 
   return (
     <Container>
-      <FlatList
+      <ProductList
         horizontal
         showsHorizontalScrollIndicator={false}
         data={products}

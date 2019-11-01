@@ -103,7 +103,7 @@ export default function Cart() {
     <Container>
       {products.length === 0 ? (
         <EmptyContainer>
-          <Icon name="remove-shopping-cart" size={64} color="#eee" />
+          <Icon name="remove-shopping-cart" size={64} color="#ccc" />
           <EmptyText>Seu carrinho está vazio.</EmptyText>
         </EmptyContainer>
       ) : (
